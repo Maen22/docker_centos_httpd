@@ -1,8 +1,8 @@
 #!/bin/sh
 
-docker build --rm -t httpd-client /root/client/
+docker build --rm -t maen22/httpd-client /root/docker_assignment/client/
 
-docker run -ti -d --name client --tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro httpd-client
+docker run -ti -d --name client --tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro maen22/httpd-client
 
 # need to be loged in to docker (using docker-hub account)!
-# docker push httpd-client
+# docker push maen22/httpd-client
