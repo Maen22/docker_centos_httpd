@@ -1,5 +1,7 @@
 node {
     def commit_id
+    def client
+    def server
     def to = 'to@example.com'
     try {
 
@@ -22,8 +24,8 @@ node {
         }
 
         stage('run client/server'){
-		    def client = docker.image("maen22/httpd-client:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro")
-            def server = docker.image("maen22/httpd-repo-server:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8899:80")
+		    client = docker.image("maen22/httpd-client:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name client")
+            server = docker.image("maen22/httpd-repo-server:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8899:80")
         }
 
         stage('test images') {
@@ -49,5 +51,8 @@ node {
 
           // mark current build as a failure and throw the error
           throw e;  
-    }
+    } finally {
+        client.stop()
+        server.stop()  
+      }
 }
