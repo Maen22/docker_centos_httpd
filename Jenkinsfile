@@ -30,7 +30,10 @@ node {
 
         stage('test images') {
             echo 'Testing...'
-            def output = sh 'docker exec client ls -l /usr/sbin/httpd | grep httpd'
+            def output = sh (
+                            script: 'docker exec client ls -l /usr/sbin/httpd',
+                            returnStdout: true
+                        ).trim()
             echo "OUTPUT ----------------- {output} ------------------"
             if (output == null || output.isEmpty()){
                 error("httpd is not installed on the client!.")
