@@ -31,7 +31,7 @@ node {
         stage('test images') {
             echo 'Testing...'
             def output = sh 'docker exec client ls -l /usr/sbin/httpd | grep httpd'
-            echo "$OUTPUT ----------------- {output} ------------------"
+            echo "OUTPUT ----------------- {output} ------------------"
             if (output == null || output.isEmpty()){
                 error("httpd is not installed on the client!.")
             }
