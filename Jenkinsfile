@@ -22,8 +22,8 @@ node {
         }
 
         stage('run client/server'){
-		    def client = docker.image('maen22/httpd-client:${commit_id}').run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro")
-            def server = docker.image('maen22/httpd-repo-server:${commit_id}').run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8899:80")
+		    def client = docker.image("maen22/httpd-client:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro")
+            def server = docker.image("maen22/httpd-repo-server:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8899:80")
         }
 
         stage('test images') {
