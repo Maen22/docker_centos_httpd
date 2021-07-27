@@ -34,7 +34,7 @@ node {
                             script: 'docker exec client ls -l /usr/sbin/httpd',
                             returnStdout: true
                         ).trim()
-            echo "OUTPUT ----------------- {output} ------------------"
+            echo "OUTPUT ----------------- $output ------------------"
             if (output == null || output.isEmpty()){
                 error("httpd is not installed on the client!.")
             }
