@@ -4,8 +4,7 @@ node {
     def server
     def to = 'to@example.com'
     try {
-
-	    stage('Preparation') {
+	stage('Preparation') {
             checkout scm
             sh 'git rev-parse --short HEAD > .git/commit-id'
             commit_id = readFile('.git/commit-id').trim()
@@ -24,7 +23,7 @@ node {
         }
 
         stage('run client/server'){
-		    client = docker.image("maen22/httpd-client:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name client")
+	    client = docker.image("maen22/httpd-client:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name client")
             server = docker.image("maen22/httpd-repo-server:${commit_id}").run("--tmpfs /tmp --tmpfs /run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8899:80")
         }
 
@@ -40,7 +39,7 @@ node {
             }
 
         }
-    } catch(e){
+    } catch(e) {
           currentBuild.result = "FAILURE";
           // set variables
           def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
